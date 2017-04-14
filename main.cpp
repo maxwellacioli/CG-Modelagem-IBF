@@ -16,6 +16,24 @@ float angle = 0.0f;
 float right_door_angle = -45.0f;
 float left_door_angle = -45.0f;
 
+
+void drawProjectionQuad() {
+	glColor3f(0.0f, 0.0f, 0.0f);
+    //bordas quadro
+    glPushMatrix();
+    glTranslatef(6.95f, 4.0f, -29.0f);
+    glScalef(0.1, 2.0, 2.0);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+
+	glColor3f(1.0f, 1.0f, 1.0f);
+	//area de projeção
+    glPushMatrix();
+    glTranslatef(6.85f, 4.0f, -29.0f);
+    glScalef(0.1, 1.75, 1.75);
+    glutSolidCube(1.0f);
+    glPopMatrix();}
+
 void drawChair(float x, float z) {
     glColor3f(0.1f, 0.0f, 0.0f);
     
@@ -341,7 +359,7 @@ void display()
   x+lx, 1.0f, z+lz,
   0.0f, 1.0f, 0.0f);
 
-  //~ glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
   drawChair(1.0f, -12.0f);
   drawChair(1.0f, -14.0f);
@@ -352,9 +370,11 @@ void display()
   drawEntrance();
   drawTemple();
   drawDoor();
+  drawProjectionQuad();
 
   glutSwapBuffers();
 }
+
 
 void keyboard(unsigned char key, int x, int y) {
     switch(key){
