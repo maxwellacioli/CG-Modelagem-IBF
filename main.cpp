@@ -3,7 +3,7 @@
 // actual vector representing the camera's direction
 float lx=0.0f,lz=-1.0f;
 // XZ position of the camera
-float x=0.0f,z=5.0f;
+float x=0.0f,z=11.0f;
 
 float right_door_pivot[] = {-2.55f, 1.25f, -12.10f};
 float left_door_pivot[] = {-4.0f, 1.25f, -13.55f};
@@ -16,19 +16,63 @@ float angle = 0.0f;
 float right_door_angle = -45.0f;
 float left_door_angle = -45.0f;
 
-void drawGrass() {
+void drawChair(float x, float z) {
+    glColor3f(0.1f, 0.0f, 0.0f);
+    
+    //base esquerda
     glPushMatrix();
-    glColor3f(0.0f,1.f,0.0f);
-    glTranslatef(0.0f, 0.0f, -3.0f);
-    glScalef(10.0, 0.0, 5.0);
+    glTranslatef(x, 0.125f, z);
+    glScalef(0.25, 0.25, 1.0);
     glutSolidCube(1.0f);
     glPopMatrix();
 
+	//lateral esquerda
+	glPushMatrix();
+    glTranslatef(x, 0.575f, z);
+    glScalef(0.125, 0.65f, 0.8);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+    
+    //suporte esquerdo do apoio traseiro
     glPushMatrix();
-    glColor3f(0.0f,1.f,0.0f);
-    glTranslatef(0.0f, 0.0f, -7.0f);
-    glScalef(10.0, 0.0, 5.0);
-//    glutSolidCube(1.0f);
+    glTranslatef(x, 0.875f, z+0.45);
+    glScalef(0.1, 1.25f, 0.1);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+    
+    //base direita
+    glPushMatrix();
+    glTranslatef(x+2, 0.125f, z);
+    glScalef(0.25, 0.25, 1.0);
+    glutSolidCube(1.0f);
+    glPopMatrix();    
+    
+    //lateral direita
+	glPushMatrix();
+    glTranslatef(x+2, 0.575f, z);
+    glScalef(0.125, 0.65f, 0.8);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+    
+    //acento 
+    glPushMatrix();
+    glTranslatef(x+1, 0.8f, z);
+    glScalef(2.0, 0.1, 1.0);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+    
+    //suporte direito do apoio traseiro
+    glPushMatrix();
+    glTranslatef(x+2, 0.875f, z+0.45);
+    glScalef(0.1, 1.25f, 0.1);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+    
+    //suporte das costas
+    glPushMatrix();
+    glTranslatef(x+1.0f, 1.25f, z+0.45);
+    glScalef(2.25f, 0.5f, 0.1);
+    glutSolidCube(1.0f);
     glPopMatrix();
 }
 
@@ -245,9 +289,9 @@ void display()
   x+lx, 1.0f, z+lz,
   0.0f, 1.0f, 0.0f);
 
-//  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  //~ glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-  drawGrass();
+  drawChair(0.0f, -2.0f);
   drawFloor();
   drawTower();
   drawEntrance();
@@ -276,17 +320,17 @@ void keyboard(unsigned char key, int x, int y) {
 void processSpecialKeys(int key, int xx, int yy)
 {
 
-float fraction = 0.1f;
+float fraction = 0.5f;
 
   switch (key)
   {
     case GLUT_KEY_LEFT :
-    angle -= 0.01f;
+    angle -= 0.05f;
     lx = sin(angle);
     lz = -cos(angle);
     break;
     case GLUT_KEY_RIGHT :
-    angle += 0.01f;
+    angle += 0.05f;
     lx = sin(angle);
     lz = -cos(angle);
     break;
@@ -369,8 +413,6 @@ int main(int argc,char **argv)
   glutReshapeFunc(reshape);
   glutIdleFunc(display);
   glutSpecialFunc(processSpecialKeys);
-  //glutPassiveMotionFunc(mouseMotion);
-  //glutMouseFunc(mouse);
 
   //glutIdleFunc(animate);
   glutMainLoop();
