@@ -28,8 +28,8 @@ void drawChair(float x, float z) {
 
 	//lateral esquerda
 	glPushMatrix();
-    glTranslatef(x, 0.575f, z);
-    glScalef(0.125, 0.65f, 0.8);
+    glTranslatef(x, 0.5f, z);
+    glScalef(0.125, 0.5f, 0.8);
     glutSolidCube(1.0f);
     glPopMatrix();
     
@@ -49,14 +49,14 @@ void drawChair(float x, float z) {
     
     //lateral direita
 	glPushMatrix();
-    glTranslatef(x+2, 0.575f, z);
-    glScalef(0.125, 0.65f, 0.8);
+    glTranslatef(x+2, 0.5f, z);
+    glScalef(0.125, 0.5f, 0.8);
     glutSolidCube(1.0f);
     glPopMatrix();
     
     //acento 
     glPushMatrix();
-    glTranslatef(x+1, 0.8f, z);
+    glTranslatef(x+1, 0.6f, z);
     glScalef(2.0, 0.1, 1.0);
     glutSolidCube(1.0f);
     glPopMatrix();
@@ -70,8 +70,8 @@ void drawChair(float x, float z) {
     
     //suporte das costas
     glPushMatrix();
-    glTranslatef(x+1.0f, 1.25f, z+0.45);
-    glScalef(2.25f, 0.5f, 0.1);
+    glTranslatef(x+1.0f, 1.125f, z+0.45);
+    glScalef(2.25f, 0.75f, 0.1);
     glutSolidCube(1.0f);
     glPopMatrix();
 }
@@ -291,7 +291,10 @@ void display()
 
   //~ glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-  drawChair(0.0f, -2.0f);
+  drawChair(1.0f, -12.0f);
+  drawChair(1.0f, -14.0f);
+  drawChair(1.0f, -16.0f);
+  drawChair(1.0f, -18.0f);
   drawFloor();
   drawTower();
   drawEntrance();
