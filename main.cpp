@@ -115,12 +115,13 @@ void drawTower() {
   glPopMatrix();
 }
 
+//FIXME colocar aqui os outros componentes da entrada \/
 void drawEntrance() {
 
 //teta entrada
   glPushMatrix();
-  glTranslatef(-0.5f, 2.25f, -7.0f);
-  glScalef(11.0, 0.5, 4.0);
+  glTranslatef(0.0f, 2.25f, -7.0f);
+  glScalef(15.0, 0.5, 4.0);
   glutSolidCube(1.0);
   glPopMatrix();
 
@@ -135,15 +136,15 @@ void drawEntrance() {
 void drawTemple() {
 //Desenha parede frontal da direita da entreda
     glPushMatrix();
-    glTranslatef(2.0f, 1.25f, -9.25f);
-    glScalef(12.0, 5.0, 1.0);
+    glTranslatef(3.25f, 1.25f, -9.25f);
+    glScalef(17.0, 5.0, 1.0);
     glutSolidCube(0.5);
     glPopMatrix();
 
 //Desenha parede frontal da esquerda da entreda
     glPushMatrix();
-    glTranslatef(-4.25f, 1.25f, -9.25f);
-    glScalef(7.0, 5.0, 1.0);
+    glTranslatef(-5.0f, 1.25f, -9.25f);
+    glScalef(10.0, 5.0, 1.0);
     glutSolidCube(0.5);
     glPopMatrix();
 
@@ -156,8 +157,8 @@ void drawTemple() {
 
 //parede superior entrada (colocar textura)
     glPushMatrix();
-    glTranslatef(-0.5f, 4.25f, -9.25f);
-    glScalef(11.0, 3.5, 0.5);
+    glTranslatef(0.0f, 4.25f, -9.25f);
+    glScalef(15.0, 3.5, 0.5);
     glutSolidCube(1.0);
     glPopMatrix();
 
@@ -171,8 +172,8 @@ void drawTemple() {
 //parede lateral esquerda do templo
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
-    glTranslatef(-5.75f, 2.75f, -17.0f);
-    glScalef(0.5, 5.5, 15.0);
+    glTranslatef(-7.25f, 2.75f, -20.5f);
+    glScalef(0.5, 5.5, 22.0);
     glutSolidCube(1.0);
     glPopMatrix();
 
@@ -185,32 +186,32 @@ void drawTemple() {
 
 //parede fundo(2), fica depois da porta
     glPushMatrix();
-    glTranslatef(-4.69f, 2.75f, -17.25f);
-    glScalef(1.63, 5.5, 0.5);
+    glTranslatef(-5.45f, 2.75f, -17.25f);
+    glScalef(3.13, 5.5, 0.5);
     glutSolidCube(1.0);
     glPopMatrix();
 
 //parede lateral direita do templo
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
-    glTranslatef(4.75f, 2.75f, -17.0f);
-    glScalef(0.5, 5.5, 15.0);
+    glTranslatef(7.25f, 2.75f, -20.5f);
+    glScalef(0.5, 5.5, 22.0);
     glutSolidCube(1.0);
     glPopMatrix();
 
 //parede do fundo do templo
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
-    glTranslatef(-0.5f, 2.75f, -24.75f);
-    glScalef(11.0, 5.5, 0.5);
+    glTranslatef(0.0f, 2.75f, -31.75f);
+    glScalef(15.0, 5.5, 0.5);
     glutSolidCube(1.0);
     glPopMatrix();
 
 //teto do templo
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
-    glTranslatef(-0.5f, 5.75f, -17.25f);
-    glScalef(11.0, 0.5, 15.5);
+    glTranslatef(0.0f, 5.75f, -20.75f);
+    glScalef(15.0, 0.5, 22.5);
     glutSolidCube(1.0);
     glPopMatrix();
 
@@ -234,11 +235,62 @@ void drawTemple() {
 //teto interno entrada do templo (parte vertical olhando de frente para o templo)
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
-    glTranslatef(-4.81f, 3.0f, -13.25f);
-    glScalef(1.375, 1.0, 7.5);
+    glTranslatef(-5.565f, 3.0f, -13.25f);
+    glScalef(2.875, 1.0, 7.5);
     glutSolidCube(1.0);
     glPopMatrix();
 
+//púlpito
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(4.5f, 0.75f, -29.0f);
+    glScalef(5.0, 1.5, 5.0);
+    glutSolidCube(1.0);
+    glPopMatrix();
+    
+//escadas frontais
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(4.5f, 0.5f, -26.25f);
+    glScalef(5.0, 1.0, 0.5);
+    glutSolidCube(1.0);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(1.75f, 0.5f, -26.25f);
+    glScalef(0.5, 1.0, 0.5);
+    glutSolidCube(1.0);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(4.25f, 0.25f, -25.75f);
+    glScalef(5.5, 0.5, 0.5);
+    glutSolidCube(1.0);
+    glPopMatrix();
+    
+//escadas laterais
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(1.75f, 0.5f, -29.0f);
+    glScalef(0.5, 1.0, 5.0);
+    glutSolidCube(1.0);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(1.25f, 0.25f, -28.75f);
+    glScalef(0.5, 0.5, 5.5);
+    glutSolidCube(1.0);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(1.25f, 0.25f, -25.75f);
+    glScalef(0.5, 0.5, 0.5);
+    glutSolidCube(1.0);
+    glPopMatrix();
 }
 
 
