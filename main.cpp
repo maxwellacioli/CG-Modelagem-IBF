@@ -16,40 +16,42 @@ float angle = 0.0f;
 float right_door_angle = -45.0f;
 float left_door_angle = -45.0f;
 
+GLuint texture_id[1];
+
 void drawOfficeDesk(float x, float z) {
 	glColor3f(1.0f, 1.0f, 1.0f);
     
     //base esquerda
     glPushMatrix();
     glTranslatef(x, 0.125f, z);
-    glScalef(0.2, 0.2, 0.7);
+    glScalef(0.2, 0.1, 0.7);
     glutSolidCube(1.0f);
     glPopMatrix();
 
 	//lateral esquerda
 	glPushMatrix();
-    glTranslatef(x, 0.5f, z);
-    glScalef(0.125, 0.5f, 0.4);
+    glTranslatef(x, 0.4f, z);
+    glScalef(0.1, 0.5f, 0.4);
     glutSolidCube(1.0f);
     glPopMatrix();
      
     //base direita
     glPushMatrix();
     glTranslatef(x+1, 0.125f, z);
-    glScalef(0.2, 0.2, 0.7);
+    glScalef(0.2, 0.1, 0.7);
     glutSolidCube(1.0f);
     glPopMatrix();    
     
     //lateral direita
 	glPushMatrix();
-    glTranslatef(x+1, 0.5f, z);
-    glScalef(0.125, 0.5f, 0.4);
+    glTranslatef(x+1, 0.4f, z);
+    glScalef(0.1, 0.5f, 0.4);
     glutSolidCube(1.0f);
     glPopMatrix();
     
     //parte superior da mesa 
     glPushMatrix();
-    glTranslatef(x+0.5, 0.8f, z);
+    glTranslatef(x+0.5, 0.7f, z);
     glScalef(1.5, 0.1, 1.0);
     glutSolidCube(1.0f);
     glPopMatrix();
@@ -73,10 +75,9 @@ void drawProjector() {
 }
 
 void drawAirConditioning(float x, float z) {
-	glColor3f(1.0f, 1.0f, 1.0f);
 	//area de projeção
     glPushMatrix();
-    //~ glTranslatef(6.85f, 3.25f, -22.0f);
+    glColor3f(1.0f, 1.0f, 1.0f);
     glTranslatef(x, 3.25f, z);
     glScalef(0.25, 0.5, 1.5);
     glutSolidCube(1.0f);
@@ -84,9 +85,9 @@ void drawAirConditioning(float x, float z) {
 }
 
 void drawProjectionQuad() {
-	glColor3f(0.0f, 0.0f, 0.0f);
     //bordas quadro
     glPushMatrix();
+    glColor3f(0.0f, 0.0f, 0.0f);
     glTranslatef(6.95f, 4.0f, -29.0f);
     glScalef(0.1, 2.0, 2.0);
     glutSolidCube(1.0f);
@@ -183,7 +184,7 @@ void drawTower() {
 //  glutSolidCube(0.5f);
   glPopMatrix();
 
-    drawCube(0.0f, 3.75f, -7.0f, 1.0f, 15.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.5f, 0.66f, 0.66f, 0.66f);
+  drawCube(0.0f, 3.75f, -7.0f, 1.0f, 15.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.5f, 0.66f, 0.66f, 0.66f);
 
 //Desenha a base da cruz
   glPushMatrix();
@@ -404,14 +405,23 @@ void drawDoor() {
 void drawFloor() {
 
   glPushMatrix();
-  glColor3f(1.0f, 1.0f, 1.0f);
+ 
+  glEnable(GL_TEXTURE_2D);
+  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+  glBindTexture(GL_TEXTURE_2D, texture_id[0]);	
+  
   glBegin(GL_QUADS);
+  glColor3f(1.0f, 1.0f, 1.0f);
   glVertex3f(-50.0f, 0.0f, -50.0f);
   glVertex3f(-50.0f, 0.0f, 50.0f);
   glVertex3f( 50.0f, 0.0f, 50.0f);
   glVertex3f( 50.0f, 0.0f, -50.0f);
   glEnd();
+ 
+  glDisable(GL_TEXTURE_2D);
   glPopMatrix();
+  
+ 
 }
 
 void display()
@@ -446,6 +456,7 @@ void display()
   drawAirConditioning(6.85, -18.0);
   drawAirConditioning(6.85, -14.0);
 
+  glFlush();
   glutSwapBuffers();
 }
 
@@ -494,8 +505,30 @@ float fraction = 0.5f;
   }
 }
 
+void loadTextureFromFile(char const *filename,int index) {
+  int width, height;
+  unsigned char* image = SOIL_load_image(filename, &width, &height, 0, SOIL_LOAD_RGBA);
+
+    printf("%d %d\n", width, height);
+
+  glGenTextures(1, &texture_id[index]);
+  glBindTexture(GL_TEXTURE_2D, texture_id[index]);
+
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+  glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void initTextures(){
+	loadTextureFromFile("texture/piso-escada.jpg", 0);
+}
+	
 void init() {
   glClearColor(0.0, 0.0, 1.0, 0.0);
+  
+  glEnable(GL_TEXTURE_2D);
 
   glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
   glLightfv(GL_LIGHT0, GL_POSITION, light_position);
@@ -508,12 +541,12 @@ void init() {
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-
+ 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glOrtho(0, WIDTH, 0, HEIGHT, -1, 1);
 
-
+  initTextures();
 }
 
 void reshape(GLsizei width, GLsizei height)
