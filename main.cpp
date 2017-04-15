@@ -16,6 +16,72 @@ float angle = 0.0f;
 float right_door_angle = -45.0f;
 float left_door_angle = -45.0f;
 
+void drawOfficeDesk(float x, float z) {
+	glColor3f(1.0f, 1.0f, 1.0f);
+    
+    //base esquerda
+    glPushMatrix();
+    glTranslatef(x, 0.125f, z);
+    glScalef(0.25, 0.25, 1.0);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+
+	//lateral esquerda
+	glPushMatrix();
+    glTranslatef(x, 0.5f, z);
+    glScalef(0.125, 0.5f, 0.8);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+     
+    //base direita
+    glPushMatrix();
+    glTranslatef(x+1, 0.125f, z);
+    glScalef(0.25, 0.25, 1.0);
+    glutSolidCube(1.0f);
+    glPopMatrix();    
+    
+    //lateral direita
+	glPushMatrix();
+    glTranslatef(x+1, 0.5f, z);
+    glScalef(0.125, 0.5f, 0.8);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+    
+    //parte superior da mesa 
+    glPushMatrix();
+    glTranslatef(x+0.5, 0.8f, z);
+    glScalef(1.5, 0.1, 2.0);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+}
+
+void drawProjector() {
+	glColor3f(1.0f, 1.0f, 1.0f);
+	//suporte projetor
+    glPushMatrix();
+    glTranslatef(2.0f, 5.375f, -29.0);
+    glScalef(0.05, 0.5, 0.05);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+    
+	//projetor
+    glPushMatrix();
+    glTranslatef(2.0f, 5.0625f, -29.0f);
+    glScalef(0.5, 0.125, 0.5);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+}
+
+void drawAirConditioning(float x, float z) {
+	glColor3f(1.0f, 1.0f, 1.0f);
+	//area de projeção
+    glPushMatrix();
+    //~ glTranslatef(6.85f, 3.25f, -22.0f);
+    glTranslatef(x, 3.25f, z);
+    glScalef(0.25, 0.5, 1.5);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+}
 
 void drawProjectionQuad() {
 	glColor3f(0.0f, 0.0f, 0.0f);
@@ -32,7 +98,8 @@ void drawProjectionQuad() {
     glTranslatef(6.85f, 4.0f, -29.0f);
     glScalef(0.1, 1.75, 1.75);
     glutSolidCube(1.0f);
-    glPopMatrix();}
+    glPopMatrix();
+}
 
 void drawChair(float x, float z) {
     glColor3f(0.1f, 0.0f, 0.0f);
@@ -359,18 +426,25 @@ void display()
   x+lx, 1.0f, z+lz,
   0.0f, 1.0f, 0.0f);
 
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  //~ glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-  drawChair(1.0f, -12.0f);
-  drawChair(1.0f, -14.0f);
-  drawChair(1.0f, -16.0f);
-  drawChair(1.0f, -18.0f);
+  drawChair(3.0f, -12.0f);
+  drawChair(3.0f, -14.0f);
+  drawChair(3.0f, -16.0f);
+  drawChair(3.0f, -18.0f);
+  drawChair(3.0f, -20.0f);
+  drawChair(3.0f, -22.0f);
   drawFloor();
   drawTower();
   drawEntrance();
   drawTemple();
   drawDoor();
   drawProjectionQuad();
+  drawProjector();
+  drawOfficeDesk(-6.0f, -10.5f);
+  drawAirConditioning(6.85, -22.0);
+  drawAirConditioning(6.85, -18.0);
+  drawAirConditioning(6.85, -14.0);
 
   glutSwapBuffers();
 }
