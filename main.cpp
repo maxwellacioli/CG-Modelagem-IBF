@@ -22,35 +22,35 @@ void drawOfficeDesk(float x, float z) {
     //base esquerda
     glPushMatrix();
     glTranslatef(x, 0.125f, z);
-    glScalef(0.25, 0.25, 1.0);
+    glScalef(0.2, 0.2, 0.7);
     glutSolidCube(1.0f);
     glPopMatrix();
 
 	//lateral esquerda
 	glPushMatrix();
     glTranslatef(x, 0.5f, z);
-    glScalef(0.125, 0.5f, 0.8);
+    glScalef(0.125, 0.5f, 0.4);
     glutSolidCube(1.0f);
     glPopMatrix();
      
     //base direita
     glPushMatrix();
     glTranslatef(x+1, 0.125f, z);
-    glScalef(0.25, 0.25, 1.0);
+    glScalef(0.2, 0.2, 0.7);
     glutSolidCube(1.0f);
     glPopMatrix();    
     
     //lateral direita
 	glPushMatrix();
     glTranslatef(x+1, 0.5f, z);
-    glScalef(0.125, 0.5f, 0.8);
+    glScalef(0.125, 0.5f, 0.4);
     glutSolidCube(1.0f);
     glPopMatrix();
     
     //parte superior da mesa 
     glPushMatrix();
     glTranslatef(x+0.5, 0.8f, z);
-    glScalef(1.5, 0.1, 2.0);
+    glScalef(1.5, 0.1, 1.0);
     glutSolidCube(1.0f);
     glPopMatrix();
 }
