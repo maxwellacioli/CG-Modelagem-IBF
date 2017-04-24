@@ -1,6 +1,6 @@
 # Variables
 COMPILER = g++
-LIBS     = -lglut -lSOIL -lGLU -lGL -lm
+LIBS     = -lglut -lSOIL -lGLU -lGL -lm -lsfml-graphics
 CFLAGS   = -g
 NAME     = main
 

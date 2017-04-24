@@ -1,5 +1,8 @@
 #include "main.h"
 
+#include <fstream>
+#include <SFML/Graphics.hpp>
+
 // actual vector representing the camera's direction
 float lx=0.0f,lz=-1.0f;
 // XZ position of the camera
@@ -177,13 +180,6 @@ void drawCube(float t_x, float t_y, float t_z, float s_x, float s_y, float s_z,
 
 void drawTower() {
 //Desenha a pilastra da cruz
-  glPushMatrix();
-  glColor3f(0.66f,0.66f,0.66f);
-  glTranslatef(0.0f, 3.75f, -7.0f);
-  glScalef(1.0, 15.0, 1.0);
-//  glutSolidCube(0.5f);
-  glPopMatrix();
-
   drawCube(0.0f, 3.75f, -7.0f, 1.0f, 15.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.5f, 0.66f, 0.66f, 0.66f);
 
 //Desenha a base da cruz
@@ -405,20 +401,19 @@ void drawDoor() {
 void drawFloor() {
 
   glPushMatrix();
- 
-  glEnable(GL_TEXTURE_2D);
-  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-  glBindTexture(GL_TEXTURE_2D, texture_id[0]);	
-  
+  glBindTexture(GL_TEXTURE_2D, texture_id[0]);	 
   glBegin(GL_QUADS);
   glColor3f(1.0f, 1.0f, 1.0f);
+  glTexCoord2f(0.0f, 1.0f); 
   glVertex3f(-50.0f, 0.0f, -50.0f);
+  glTexCoord2f(0.0f, 0.0f);
   glVertex3f(-50.0f, 0.0f, 50.0f);
+  glTexCoord2f(1.0f, 0.0f); 
   glVertex3f( 50.0f, 0.0f, 50.0f);
+  glTexCoord2f(1.0f, 1.0f); 
   glVertex3f( 50.0f, 0.0f, -50.0f);
   glEnd();
- 
-  glDisable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D, 0);	 
   glPopMatrix();
   
  
@@ -428,7 +423,8 @@ void display()
 {
   // Clear Color and Depth Buffers
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glMatrixMode(GL_MODELVIEW);     // To operate on model-view matrix
+  // To operate on model-view matrix
+  glMatrixMode(GL_MODELVIEW);     
   // Reset transformations
   glLoadIdentity();
   // Set the camera
@@ -506,8 +502,17 @@ float fraction = 0.5f;
 }
 
 void loadTextureFromFile(char const *filename,int index) {
-  int width, height;
-  unsigned char* image = SOIL_load_image(filename, &width, &height, 0, SOIL_LOAD_RGBA);
+  int width, height, c;
+  c = 3;
+  std::ifstream file(filename);
+  if(! file.good())
+    throw "file not found";
+  file.close();
+  
+//  unsigned char* image = SOIL_load_image(filename, &width, &height, 0, SOIL_LOAD_RGBA);
+
+sf::Image image;
+image.loadFromFile(filename);
 
     printf("%d %d\n", width, height);
 
@@ -517,7 +522,7 @@ void loadTextureFromFile(char const *filename,int index) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getSize().x, image.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.getPixelsPtr());
   glBindTexture(GL_TEXTURE_2D, 0);
 }
 
@@ -527,8 +532,6 @@ void initTextures(){
 	
 void init() {
   glClearColor(0.0, 0.0, 1.0, 0.0);
-  
-  glEnable(GL_TEXTURE_2D);
 
   glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
   glLightfv(GL_LIGHT0, GL_POSITION, light_position);
@@ -541,6 +544,8 @@ void init() {
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+ 
+  glEnable(GL_TEXTURE_2D);
  
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
