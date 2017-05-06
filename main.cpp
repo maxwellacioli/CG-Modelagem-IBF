@@ -19,7 +19,69 @@ float angle = 0.0f;
 float right_door_angle = -45.0f;
 float left_door_angle = -45.0f;
 
-GLuint texture_id[1];
+GLuint texture_id[4];
+
+void drawCube(GLdouble size, int *tex) {
+  static GLfloat n[6][3] =
+  {
+    {-1.0, 0.0, 0.0},
+    {0.0, 1.0, 0.0},
+    {1.0, 0.0, 0.0},
+    {0.0, -1.0, 0.0},
+    {0.0, 0.0, 1.0},
+    {0.0, 0.0, -1.0}
+  };
+  static GLint faces[6][4] =
+  {
+    {0, 1, 2, 3},
+    {3, 2, 6, 7},
+    {7, 6, 5, 4},
+    {4, 5, 1, 0},
+    {5, 6, 2, 1},
+    {7, 4, 0, 3}
+  };
+  GLfloat v[8][3];
+  GLint i;
+
+  v[0][0] = v[1][0] = v[2][0] = v[3][0] = -size / 2;
+  v[4][0] = v[5][0] = v[6][0] = v[7][0] = size / 2;
+  v[0][1] = v[1][1] = v[4][1] = v[5][1] = -size / 2;
+  v[2][1] = v[3][1] = v[6][1] = v[7][1] = size / 2;
+  v[0][2] = v[3][2] = v[4][2] = v[7][2] = -size / 2;
+  v[1][2] = v[2][2] = v[5][2] = v[6][2] = size / 2;
+
+  for (i = 5; i >= 0; i--) {
+    if(tex[i] >= 0) {
+      glBindTexture(GL_TEXTURE_2D, texture_id[tex[i]]);
+    }
+    glBegin(GL_QUADS);
+    glNormal3fv(&n[i][0]);
+    if(i==1)
+      glTexCoord2f(1.0f, 0.0f);
+    else
+      glTexCoord2f(0.0f, 0.0f);
+    glVertex3fv(&v[faces[i][0]][0]);
+    if(i==1)
+      glTexCoord2f(0.0f, 0.0f);
+    else
+      glTexCoord2f(1.0f, 0.0f);
+    glVertex3fv(&v[faces[i][1]][0]);
+    if(i==1)
+      glTexCoord2f(0.0f, 1.0f);
+    else
+      glTexCoord2f(1.0f, 1.0f);
+    glVertex3fv(&v[faces[i][2]][0]);
+    if(i==1)
+      glTexCoord2f(1.0f, 1.0f);
+    else
+      glTexCoord2f(0.0f, 1.0f);
+    glVertex3fv(&v[faces[i][3]][0]);
+    glEnd();
+    if(tex[i] >= 0) {
+      glBindTexture(GL_TEXTURE_2D, 0);
+    }
+  }
+}
 
 void drawOfficeDesk(float x, float z) {
 	glColor3f(1.0f, 1.0f, 1.0f);
@@ -79,11 +141,13 @@ void drawProjector() {
 
 void drawAirConditioning(float x, float z) {
 	//area de projeção
+	int air_texture[] = {3, -1, -1, -1, -1, -1};
+	
     glPushMatrix();
     glColor3f(1.0f, 1.0f, 1.0f);
     glTranslatef(x, 3.25f, z);
     glScalef(0.25, 0.5, 1.5);
-    glutSolidCube(1.0f);
+    drawCube(1.0f, air_texture);
     glPopMatrix();
 }
 
@@ -108,67 +172,69 @@ void drawProjectionQuad() {
 void drawChair(float x, float z) {
     glColor3f(0.1f, 0.0f, 0.0f);
     
+    int chair_texture[] = {2, 2, 2, 2, 2, 2};
+    
     //base esquerda
     glPushMatrix();
     glTranslatef(x, 0.125f, z);
     glScalef(0.25, 0.25, 1.0);
-    glutSolidCube(1.0f);
+    drawCube(1.0f, chair_texture);
     glPopMatrix();
 
 	//lateral esquerda
 	glPushMatrix();
     glTranslatef(x, 0.5f, z);
     glScalef(0.125, 0.5f, 0.8);
-    glutSolidCube(1.0f);
+    drawCube(1.0f, chair_texture);
     glPopMatrix();
     
     //suporte esquerdo do apoio traseiro
     glPushMatrix();
     glTranslatef(x, 0.875f, z+0.45);
     glScalef(0.1, 1.25f, 0.1);
-    glutSolidCube(1.0f);
+    drawCube(1.0f, chair_texture);
     glPopMatrix();
     
     //base direita
     glPushMatrix();
     glTranslatef(x+2, 0.125f, z);
     glScalef(0.25, 0.25, 1.0);
-    glutSolidCube(1.0f);
+    drawCube(1.0f, chair_texture);
     glPopMatrix();    
     
     //lateral direita
 	glPushMatrix();
     glTranslatef(x+2, 0.5f, z);
     glScalef(0.125, 0.5f, 0.8);
-    glutSolidCube(1.0f);
+    drawCube(1.0f, chair_texture);
     glPopMatrix();
     
     //acento 
     glPushMatrix();
     glTranslatef(x+1, 0.6f, z);
     glScalef(2.0, 0.1, 1.0);
-    glutSolidCube(1.0f);
+    drawCube(1.0f, chair_texture);
     glPopMatrix();
     
     //suporte direito do apoio traseiro
     glPushMatrix();
     glTranslatef(x+2, 0.875f, z+0.45);
     glScalef(0.1, 1.25f, 0.1);
-    glutSolidCube(1.0f);
+    drawCube(1.0f, chair_texture);
     glPopMatrix();
     
     //suporte das costas
     glPushMatrix();
     glTranslatef(x+1.0f, 1.125f, z+0.45);
     glScalef(2.25f, 0.75f, 0.1);
-    glutSolidCube(1.0f);
+    drawCube(1.0f, chair_texture);
     glPopMatrix();
 }
 
 //t_x = translação em x
 //s_x = escala em x
 //r_x = rotação em x
-void drawCube(float t_x, float t_y, float t_z, float s_x, float s_y, float s_z,
+void drawBox(float t_x, float t_y, float t_z, float s_x, float s_y, float s_z,
     float r_x, float r_y, float r_z, float cube_side, float r, float g, float b) {
     glPushMatrix();
     glColor3f(r, g, b);
@@ -180,7 +246,7 @@ void drawCube(float t_x, float t_y, float t_z, float s_x, float s_y, float s_z,
 
 void drawTower() {
 //Desenha a pilastra da cruz
-  drawCube(0.0f, 3.75f, -7.0f, 1.0f, 15.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.5f, 0.66f, 0.66f, 0.66f);
+  drawBox(0.0f, 3.75f, -7.0f, 1.0f, 15.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.5f, 0.66f, 0.66f, 0.66f);
 
 //Desenha a base da cruz
   glPushMatrix();
@@ -323,11 +389,13 @@ void drawTemple() {
     glPopMatrix();
 
 //púlpito
+	int pulpito_texture[] = {0, 0, 0, -1, 0, 0};
+
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
     glTranslatef(4.5f, 0.75f, -29.0f);
     glScalef(5.0, 1.5, 5.0);
-    glutSolidCube(1.0);
+    drawCube(1.0, pulpito_texture);
     glPopMatrix();
     
 //escadas frontais
@@ -335,21 +403,21 @@ void drawTemple() {
     glColor3f(0.66f,0.66f,0.66f);
     glTranslatef(4.5f, 0.5f, -26.25f);
     glScalef(5.0, 1.0, 0.5);
-    glutSolidCube(1.0);
+    drawCube(1.0, pulpito_texture);
     glPopMatrix();
     
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
     glTranslatef(1.75f, 0.5f, -26.25f);
     glScalef(0.5, 1.0, 0.5);
-    glutSolidCube(1.0);
+    drawCube(1.0, pulpito_texture);
     glPopMatrix();
     
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
     glTranslatef(4.25f, 0.25f, -25.75f);
     glScalef(5.5, 0.5, 0.5);
-    glutSolidCube(1.0);
+    drawCube(1.0, pulpito_texture);
     glPopMatrix();
     
 //escadas laterais
@@ -357,21 +425,21 @@ void drawTemple() {
     glColor3f(0.66f,0.66f,0.66f);
     glTranslatef(1.75f, 0.5f, -29.0f);
     glScalef(0.5, 1.0, 5.0);
-    glutSolidCube(1.0);
+    drawCube(1.0, pulpito_texture);
     glPopMatrix();
     
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
     glTranslatef(1.25f, 0.25f, -28.75f);
     glScalef(0.5, 0.5, 5.5);
-    glutSolidCube(1.0);
+    drawCube(1.0, pulpito_texture);
     glPopMatrix();
     
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
     glTranslatef(1.25f, 0.25f, -25.75f);
     glScalef(0.5, 0.5, 0.5);
-    glutSolidCube(1.0);
+    drawCube(1.0, pulpito_texture);
     glPopMatrix();
 }
 
@@ -401,7 +469,7 @@ void drawDoor() {
 void drawFloor() {
 
   glPushMatrix();
-  glBindTexture(GL_TEXTURE_2D, texture_id[0]);	 
+  //~ glBindTexture(GL_TEXTURE_2D, texture_id[0]);	 
   glBegin(GL_QUADS);
   glColor3f(1.0f, 1.0f, 1.0f);
   glTexCoord2f(0.0f, 1.0f); 
@@ -413,10 +481,22 @@ void drawFloor() {
   glTexCoord2f(1.0f, 1.0f); 
   glVertex3f( 50.0f, 0.0f, -50.0f);
   glEnd();
-  glBindTexture(GL_TEXTURE_2D, 0);	 
+  //~ glBindTexture(GL_TEXTURE_2D, 0);	 
   glPopMatrix();
   
  
+}
+
+void test() {
+	int texture[] = {-1, //esquerda
+					 -1, //cima
+					 -1, //direita 
+					 -1, //baixo
+					 -1, //frente
+					 -1}; //tras
+
+	glTranslatef(0.0f, 4.0f, 0.0f);
+	drawCube(2, texture);
 }
 
 void display()
@@ -451,7 +531,7 @@ void display()
   drawAirConditioning(6.85, -22.0);
   drawAirConditioning(6.85, -18.0);
   drawAirConditioning(6.85, -14.0);
-
+  
   glFlush();
   glutSwapBuffers();
 }
@@ -528,6 +608,9 @@ image.loadFromFile(filename);
 
 void initTextures(){
 	loadTextureFromFile("texture/piso-escada.jpg", 0);
+	loadTextureFromFile("texture/grass.jpg", 1);
+	loadTextureFromFile("texture/tabaco.jpg", 2);
+	loadTextureFromFile("texture/airc.jpg", 3);
 }
 	
 void init() {

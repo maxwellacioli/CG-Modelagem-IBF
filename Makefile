@@ -8,3 +8,4 @@ NAME     = main
 all:
 	$(COMPILER) -c $(NAME).cpp $(LIBS) $(CFLAGS)
 	$(COMPILER) -o $(NAME) $(NAME).o $(CLASSES) $(LIBS)
+
