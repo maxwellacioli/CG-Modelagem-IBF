@@ -248,6 +248,7 @@ void drawChair(float x, float z) {
 void drawTower() {
 //Desenha a pilastra da cruz
   int inferior_cruz_texture[] = {-1, -1, -1, -1, 11, -1};
+  int superior_cruz_texture[] = {-1, -1, -1, -1, 12, -1};
 
   glPushMatrix();
   glTranslatef(0.0f, 1.25f, -7.0f);
@@ -259,14 +260,14 @@ void drawTower() {
   glPushMatrix();
   glTranslatef(0.0f, 3.6f, -7.0f);
   glScalef(1.0f, 4.0f, 1.0f);
-  glutSolidCube(0.5);
+  drawCube(0.5f, inferior_cruz_texture);
   glPopMatrix();
   
   //superior
   glPushMatrix();
   glTranslatef(0.0f, 6.10f, -7.0f);
   glScalef(1.0f, 6.0f, 1.0f);
-  glutSolidCube(0.5);
+  drawCube(0.5f, superior_cruz_texture);
   glPopMatrix();
 //####
 
@@ -667,7 +668,7 @@ void display()
   x+lx, 1.0f, z+lz,
   0.0f, 1.0f, 0.0f);
 
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  //~ glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
   drawChair(3.0f, -12.0f);
   drawChair(3.0f, -14.0f);
