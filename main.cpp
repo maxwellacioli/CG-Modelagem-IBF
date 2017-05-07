@@ -19,6 +19,8 @@ float angle = 0.0f;
 float right_door_angle = -45.0f;
 float left_door_angle = -45.0f;
 
+float glass_alpha = 0.5f;
+
 GLuint texture_id[20];
 
 void drawCube(GLdouble size, int *tex) {
@@ -143,9 +145,15 @@ void drawProjector() {
     glPopMatrix();
 }
 
-void drawAirConditioning(float x, float z) {
+void drawAirConditioning(float x, float z, char side) {
 	//area de projeção
 	int air_texture[] = {3, -1, -1, -1, -1, -1};
+	
+	if(side == 'r') {
+		air_texture[0] = 3;
+	} else if(side == 'l') {
+		air_texture[2] = 3;
+	}
 	
     glPushMatrix();
     glColor3f(1.0f, 1.0f, 1.0f);
@@ -237,33 +245,43 @@ void drawChair(float x, float z) {
     glPopMatrix();
 }
 
-//t_x = translação em x
-//s_x = escala em x
-//r_x = rotação em x
-void drawBox(float t_x, float t_y, float t_z, float s_x, float s_y, float s_z,
-    float r_x, float r_y, float r_z, float cube_side, float r, float g, float b) {
-    glPushMatrix();
-    glColor3f(r, g, b);
-    glTranslatef(t_x, t_y, t_z);
-    glScalef(s_x, s_y, s_z);
-    glutSolidCube(cube_side);
-    glPopMatrix();
-}
-
 void drawTower() {
 //Desenha a pilastra da cruz
-  drawBox(0.0f, 3.75f, -7.0f, 1.0f, 15.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.5f, 0.66f, 0.66f, 0.66f);
+  int inferior_cruz_texture[] = {-1, -1, -1, -1, 11, -1};
+
+  glPushMatrix();
+  glTranslatef(0.0f, 1.25f, -7.0f);
+  glScalef(1.0f, 3.5f, 1.0f);
+  glutSolidCube(0.5);
+  glPopMatrix();
+  
+  //inferior
+  glPushMatrix();
+  glTranslatef(0.0f, 3.6f, -7.0f);
+  glScalef(1.0f, 4.0f, 1.0f);
+  glutSolidCube(0.5);
+  glPopMatrix();
+  
+  //superior
+  glPushMatrix();
+  glTranslatef(0.0f, 6.10f, -7.0f);
+  glScalef(1.0f, 6.0f, 1.0f);
+  glutSolidCube(0.5);
+  glPopMatrix();
+//####
+
+  int base_texture[] = {-1, 1, -1, -1, -1, -1};
 
 //Desenha a base da cruz
   glPushMatrix();
   glTranslatef(0.0f, 0.25f, -7.0f);
   glScalef(1.0, 0.25, 1.0);
-  glutSolidCube(2.0);
+  drawCube(2.0f, base_texture);
   glPopMatrix();
 
 //Desenha a barra central da cruz
   glPushMatrix();
-  glTranslatef(0.0f, 5.0f, -7.0f);
+  glTranslatef(0.0f, 5.0f, -7.15f);
   glScalef(4.0, 0.25, 1.0);
   glutSolidCube(0.5);
   glPopMatrix();
@@ -272,13 +290,21 @@ void drawTower() {
 //FIXME colocar aqui os outros componentes da entrada \/
 void drawEntrance() {
 	
-  int fac_texture[] = {-1, -1, -1, -1, -1, -1};
+  int fachada_letras_texture[] = {-1, -1, -1, -1, 6, -1};
 
 //teta entrada
   glPushMatrix();
+  glColor3f(1.0f, 1.0f, 1.0f);
+  glTranslatef(0.0f, 2.25f, -5.0f);
+  glScalef(15.0, 0.5, 1.0);
+  drawCube(1.0f, fachada_letras_texture);
+  glPopMatrix();
+  
+  glPushMatrix();
+  glColor3f(1.0f, 1.0f, 1.0f);
   glTranslatef(0.0f, 2.25f, -7.0f);
-  glScalef(15.0, 0.5, 4.0);
-  drawCube(1.0f, fac_texture);
+  glScalef(15.0, 0.5, 3.0);
+  glutSolidCube(1.0f);
   glPopMatrix();
 
 //coluna entrada
@@ -312,10 +338,12 @@ void drawTemple() {
     glPopMatrix();
 
 //parede superior entrada (colocar textura)
+	int fachada_teto_texture[] = {-1, -1, -1, -1, 10, -1};
+
     glPushMatrix();
     glTranslatef(0.0f, 4.25f, -9.25f);
     glScalef(15.0, 3.5, 0.5);
-    glutSolidCube(1.0);
+    drawCube(1.0f, fachada_teto_texture);
     glPopMatrix();
 
 //parede fundo entrada
@@ -324,7 +352,7 @@ void drawTemple() {
     glScalef(1.5, 5.5, 0.5);
     glutSolidCube(1.0);
     glPopMatrix();
-
+	
 //parede lateral esquerda do templo
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
@@ -358,8 +386,57 @@ void drawTemple() {
 //parede do fundo do templo
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
-    glTranslatef(0.0f, 2.75f, -31.75f);
-    glScalef(15.0, 5.5, 0.5);
+    glTranslatef(4.0f, 2.75f, -31.75f);
+    glScalef(7.0, 5.5, 0.5);
+    glutSolidCube(1.0);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(-3.5f, 3.25f, -31.75f);
+    glScalef(8.0, 0.5, 0.5);
+    glutSolidCube(1.0);
+    glPopMatrix();
+    
+	glPushMatrix();
+	glColor4f(0.5f,0.5f,0.5f, glass_alpha);
+	glTranslatef(-1.5f, 1.5f, -31.75f);
+    glScalef(4.0, 3.0, 0.5);
+    glutSolidCube(1.0);
+    glPopMatrix();
+    
+    glPushMatrix();
+	glColor4f(0.5f,0.5f,0.5f, glass_alpha);
+	glTranslatef(-1.5f, 4.5f, -31.75f);
+    glScalef(4.0, 2.0, 0.5);
+    glutSolidCube(1.0);
+    glPopMatrix();
+    
+    glPushMatrix();
+	glColor3f(0.66f,0.66f,0.66);
+	glTranslatef(-3.75f, 2.75f, -31.75f);
+    glScalef(0.5, 5.5, 0.5);
+    glutSolidCube(1.0);
+    glPopMatrix();
+    
+    glPushMatrix();
+	glColor4f(0.5f,0.5f,0.5f, glass_alpha);
+	glTranslatef(-5.5f, 1.5f, -31.75f);
+    glScalef(3.0, 3.0, 0.5);
+    glutSolidCube(1.0);
+    glPopMatrix();
+    
+    glPushMatrix();
+	glColor4f(0.5f,0.5f,0.5f, glass_alpha);
+	glTranslatef(-5.5f, 4.5f, -31.75f);
+    glScalef(3.0, 2.0, 0.5);
+    glutSolidCube(1.0);
+    glPopMatrix();
+    
+    glPushMatrix();
+	glColor3f(0.66f,0.66f,0.66);
+	glTranslatef(-7.25f, 2.75f, -31.75f);
+    glScalef(0.5, 5.5, 0.5);
     glutSolidCube(1.0);
     glPopMatrix();
 
@@ -398,11 +475,24 @@ void drawTemple() {
 
 //púlpito
 	int pulpito_texture[] = {0, 0, 0, -1, 0, 0};
-
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
-    glTranslatef(4.5f, 0.75f, -29.0f);
-    glScalef(5.0, 1.5, 5.0);
+    glTranslatef(4.75f, 0.75f, -26.75f);
+    glScalef(4.5, 1.5, 0.5);
+    drawCube(1.0, pulpito_texture);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(2.25f, 0.75f, -29.25f);
+    glScalef(0.5, 1.5, 4.5);
+    drawCube(1.0, pulpito_texture);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(2.25f, 0.75f, -26.75f);
+    glScalef(0.5, 1.5, 0.5);
     drawCube(1.0, pulpito_texture);
     glPopMatrix();
     
@@ -557,8 +647,11 @@ void test() {
 					 -1, //frente
 					 -1}; //tras
 
-	glTranslatef(0.0f, 4.0f, 0.0f);
+	glPushMatrix();
+	glColor4f(0.5f, 0.5f, 0.5f, 0.5f);
+	glTranslatef(0.0f, 2.0f, 0.0f);
 	drawCube(2, texture);
+	glPopMatrix();
 }
 
 void display()
@@ -574,7 +667,7 @@ void display()
   x+lx, 1.0f, z+lz,
   0.0f, 1.0f, 0.0f);
 
-  //~ glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
   drawChair(3.0f, -12.0f);
   drawChair(3.0f, -14.0f);
@@ -601,9 +694,14 @@ void display()
   drawProjectionQuad();
   drawProjector();
   drawOfficeDesk(-6.0f, -10.5f);
-  drawAirConditioning(6.85, -22.0);
-  drawAirConditioning(6.85, -18.0);
-  drawAirConditioning(6.85, -14.0);
+  drawAirConditioning(6.85, -22.0, 'r');
+  drawAirConditioning(6.85, -18.0, 'r');
+  drawAirConditioning(6.85, -14.0, 'r');
+  
+  drawAirConditioning(-6.85, -28.0, 'l');
+  drawAirConditioning(-6.85, -25.0, 'l');
+  drawAirConditioning(-6.85, -22.0, 'l');
+  //~ test();
   
   glFlush();
   glutSwapBuffers();
@@ -661,8 +759,6 @@ void loadTextureFromFile(char const *filename,int index) {
   if(! file.good())
     throw "file not found";
   file.close();
-  
-//  unsigned char* image = SOIL_load_image(filename, &width, &height, 0, SOIL_LOAD_RGBA);
 
 sf::Image image;
 image.loadFromFile(filename);
@@ -690,10 +786,14 @@ void initTextures(){
 	loadTextureFromFile("texture/piso-templo.jpg", 7);
 	loadTextureFromFile("texture/piso-entrada.jpg", 8);
 	loadTextureFromFile("texture/mesa.jpg", 9);
+	loadTextureFromFile("texture/fachada-teto.png", 10);
+	loadTextureFromFile("texture/inferior-cruz.png", 11);
+	loadTextureFromFile("texture/superior-cruz.png", 12);
+	
 }
 	
 void init() {
-  glClearColor(0.0, 0.0, 1.0, 0.0);
+  glClearColor(0.0, 0.0, 0.0, 0.0);
 
   glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
   glLightfv(GL_LIGHT0, GL_POSITION, light_position);
@@ -704,8 +804,9 @@ void init() {
 
   glShadeModel(GL_SMOOTH);
   glEnable(GL_DEPTH_TEST);
+  
   glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
  
   glEnable(GL_TEXTURE_2D);
  
@@ -746,7 +847,7 @@ void reshape(GLsizei width, GLsizei height)
 int main(int argc,char **argv)
 {
   glutInit(&argc,argv);
-  glutInitDisplayMode(GLUT_RGB|GLUT_DEPTH|GLUT_DOUBLE);
+  glutInitDisplayMode(GLUT_RGBA|GLUT_DEPTH|GLUT_DOUBLE);
   glutInitWindowSize(WIDTH,HEIGHT);
   glutInitWindowPosition(10, 10);
 
