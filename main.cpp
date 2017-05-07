@@ -6,20 +6,20 @@
 // actual vector representing the camera's direction
 float lx=0.0f,lz=-1.0f;
 // XZ position of the camera
-float x=0.0f,z=11.0f;
+float x=-5.0f,z=6.0f;
 
 float right_door_pivot[] = {-2.55f, 1.25f, -12.10f};
 float left_door_pivot[] = {-4.0f, 1.25f, -13.55f};
 
 GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
-GLfloat light_position[] = {1.0, 1.0, 1.0, 0.0};
+GLfloat light_position[] = {0.0, 1.0, 1.0, 1.0};
 
 float angle = 0.0f;
 
 float right_door_angle = -45.0f;
 float left_door_angle = -45.0f;
 
-GLuint texture_id[4];
+GLuint texture_id[20];
 
 void drawCube(GLdouble size, int *tex) {
   static GLfloat n[6][3] =
@@ -85,44 +85,48 @@ void drawCube(GLdouble size, int *tex) {
 
 void drawOfficeDesk(float x, float z) {
 	glColor3f(1.0f, 1.0f, 1.0f);
+	
+	int office_desk_texture[] = {9, 9, 9, 9, 9, 9};
     
     //base esquerda
     glPushMatrix();
     glTranslatef(x, 0.125f, z);
     glScalef(0.2, 0.1, 0.7);
-    glutSolidCube(1.0f);
+    drawCube(1.0f, office_desk_texture);
     glPopMatrix();
 
 	//lateral esquerda
 	glPushMatrix();
     glTranslatef(x, 0.4f, z);
     glScalef(0.1, 0.5f, 0.4);
-    glutSolidCube(1.0f);
+    drawCube(1.0f, office_desk_texture);
     glPopMatrix();
      
     //base direita
     glPushMatrix();
     glTranslatef(x+1, 0.125f, z);
     glScalef(0.2, 0.1, 0.7);
-    glutSolidCube(1.0f);
+    drawCube(1.0f, office_desk_texture);
     glPopMatrix();    
     
     //lateral direita
 	glPushMatrix();
     glTranslatef(x+1, 0.4f, z);
     glScalef(0.1, 0.5f, 0.4);
-    glutSolidCube(1.0f);
+    drawCube(1.0f, office_desk_texture);
     glPopMatrix();
     
     //parte superior da mesa 
     glPushMatrix();
     glTranslatef(x+0.5, 0.7f, z);
     glScalef(1.5, 0.1, 1.0);
-    glutSolidCube(1.0f);
+    drawCube(1.0f, office_desk_texture);
     glPopMatrix();
 }
 
 void drawProjector() {
+	int projector_texture[] = {-1, -1, -1, 4, -1, -1};
+	
 	glColor3f(1.0f, 1.0f, 1.0f);
 	//suporte projetor
     glPushMatrix();
@@ -135,7 +139,7 @@ void drawProjector() {
     glPushMatrix();
     glTranslatef(2.0f, 5.0625f, -29.0f);
     glScalef(0.5, 0.125, 0.5);
-    glutSolidCube(1.0f);
+    drawCube(1.0f, projector_texture);
     glPopMatrix();
 }
 
@@ -152,6 +156,8 @@ void drawAirConditioning(float x, float z) {
 }
 
 void drawProjectionQuad() {
+	int projection_texture[] = {5, -1, -1, -1, -1, -1, -1};
+	
     //bordas quadro
     glPushMatrix();
     glColor3f(0.0f, 0.0f, 0.0f);
@@ -165,7 +171,7 @@ void drawProjectionQuad() {
     glPushMatrix();
     glTranslatef(6.85f, 4.0f, -29.0f);
     glScalef(0.1, 1.75, 1.75);
-    glutSolidCube(1.0f);
+    drawCube(1.0f, projection_texture);
     glPopMatrix();
 }
 
@@ -265,12 +271,14 @@ void drawTower() {
 
 //FIXME colocar aqui os outros componentes da entrada \/
 void drawEntrance() {
+	
+  int fac_texture[] = {-1, -1, -1, -1, -1, -1};
 
 //teta entrada
   glPushMatrix();
   glTranslatef(0.0f, 2.25f, -7.0f);
   glScalef(15.0, 0.5, 4.0);
-  glutSolidCube(1.0);
+  drawCube(1.0f, fac_texture);
   glPopMatrix();
 
 //coluna entrada
@@ -468,23 +476,77 @@ void drawDoor() {
 
 void drawFloor() {
 
+  //piso-templo
   glPushMatrix();
-  //~ glBindTexture(GL_TEXTURE_2D, texture_id[0]);	 
+  glBindTexture(GL_TEXTURE_2D, texture_id[7]);	 
+  glTranslatef(0.0f, 0.0f, -13.0f);
   glBegin(GL_QUADS);
   glColor3f(1.0f, 1.0f, 1.0f);
   glTexCoord2f(0.0f, 1.0f); 
-  glVertex3f(-50.0f, 0.0f, -50.0f);
+  glVertex3f(-7.5f, 0.0f, -19.0f);
   glTexCoord2f(0.0f, 0.0f);
-  glVertex3f(-50.0f, 0.0f, 50.0f);
+  glVertex3f(-7.5f, 0.0f, 7.5f);
   glTexCoord2f(1.0f, 0.0f); 
-  glVertex3f( 50.0f, 0.0f, 50.0f);
+  glVertex3f( 7.5f, 0.0f, 7.5f);
   glTexCoord2f(1.0f, 1.0f); 
-  glVertex3f( 50.0f, 0.0f, -50.0f);
+  glVertex3f( 7.5f, 0.0f, -19.0f);
   glEnd();
-  //~ glBindTexture(GL_TEXTURE_2D, 0);	 
+  glBindTexture(GL_TEXTURE_2D, 0);	 
   glPopMatrix();
   
- 
+  //gramado lado esquerdo
+  glPushMatrix();
+  glBindTexture(GL_TEXTURE_2D, texture_id[1]);	 
+  glTranslatef(-5.0f, 0.0f, 6.25f);
+  glBegin(GL_QUADS);
+  glColor3f(1.0f, 1.0f, 1.0f);
+  glTexCoord2f(0.0f, 1.0f); 
+  glVertex3f(-2.5f, 0.0f, -11.75f);
+  glTexCoord2f(0.0f, 0.0f);
+  glVertex3f(-2.5f, 0.0f, 2.5f);
+  glTexCoord2f(1.0f, 0.0f); 
+  glVertex3f( 2.5f, 0.0f, 2.5f);
+  glTexCoord2f(1.0f, 1.0f); 
+  glVertex3f( 2.5f, 0.0f, -11.75f);
+  glEnd();
+  glBindTexture(GL_TEXTURE_2D, 0);	 
+  glPopMatrix();
+  
+  //gramado lado direito
+  glPushMatrix();
+  glBindTexture(GL_TEXTURE_2D, texture_id[1]);	 
+  glTranslatef(3.25f, 0.0f, 4.5f);
+  glBegin(GL_QUADS);
+  glColor3f(1.0f, 1.0f, 1.0f);
+  glTexCoord2f(0.0f, 1.0f); 
+  glVertex3f(-4.25f, 0.0f, -10.0f);
+  glTexCoord2f(0.0f, 0.0f);
+  glVertex3f(-4.25f, 0.0f, 4.25f);
+  glTexCoord2f(1.0f, 0.0f); 
+  glVertex3f( 4.25f, 0.0f, 4.25f);
+  glTexCoord2f(1.0f, 1.0f); 
+  glVertex3f( 4.25f, 0.0f, -10.0f);
+  glEnd();
+  glBindTexture(GL_TEXTURE_2D, 0);	 
+  glPopMatrix();
+  
+  //piso entrada
+  glPushMatrix();
+  glBindTexture(GL_TEXTURE_2D, texture_id[8]);	 
+  glTranslatef(-1.75f, 0.0f, 4.5f);
+  glBegin(GL_QUADS);
+  glColor3f(1.0f, 1.0f, 1.0f);
+  glTexCoord2f(0.0f, 1.0f); 
+  glVertex3f(-0.75f, 0.0f, -10.0f);
+  glTexCoord2f(0.0f, 0.0f);
+  glVertex3f(-0.75f, 0.0f, 4.25f);
+  glTexCoord2f(1.0f, 0.0f); 
+  glVertex3f( 0.75f, 0.0f, 4.25f);
+  glTexCoord2f(1.0f, 1.0f); 
+  glVertex3f( 0.75f, 0.0f, -10.0f);
+  glEnd();
+  glBindTexture(GL_TEXTURE_2D, 0);	 
+  glPopMatrix();
 }
 
 void test() {
@@ -520,6 +582,17 @@ void display()
   drawChair(3.0f, -18.0f);
   drawChair(3.0f, -20.0f);
   drawChair(3.0f, -22.0f);
+  
+  drawChair(-2.0f, -22.0f);
+  drawChair(-2.0f, -20.0f);
+  drawChair(-2.0f, -18.0f);
+  drawChair(-2.0f, -16.0f);
+  
+  drawChair(-6.0f, -25.0f);
+  drawChair(-6.0f, -23.0f);
+  drawChair(-6.0f, -21.0f);
+  drawChair(-6.0f, -19.0f);
+  
   drawFloor();
   drawTower();
   drawEntrance();
@@ -611,6 +684,12 @@ void initTextures(){
 	loadTextureFromFile("texture/grass.jpg", 1);
 	loadTextureFromFile("texture/tabaco.jpg", 2);
 	loadTextureFromFile("texture/airc.jpg", 3);
+	loadTextureFromFile("texture/projetor.jpg", 4);
+	loadTextureFromFile("texture/slide_projetor.png", 5);
+	loadTextureFromFile("texture/fachada-lt.png", 6);
+	loadTextureFromFile("texture/piso-templo.jpg", 7);
+	loadTextureFromFile("texture/piso-entrada.jpg", 8);
+	loadTextureFromFile("texture/mesa.jpg", 9);
 }
 	
 void init() {
