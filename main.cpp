@@ -286,6 +286,18 @@ void drawTower() {
   glScalef(4.0, 0.25, 1.0);
   glutSolidCube(0.5);
   glPopMatrix();
+  
+  glPushMatrix();
+  glTranslatef(0.0f, 4.5f, -6.55f);
+  glScalef(1.0, 0.25, 1.0);
+  glutSolidCube(0.5);
+  glPopMatrix();
+  
+  glPushMatrix();
+  glTranslatef(0.0f, 7.5f, -7.0f);
+  glScalef(0.05f, 4.0f, 0.05f);
+  glutSolidCube(1.0f);
+  glPopMatrix();
 }
 
 //FIXME colocar aqui os outros componentes da entrada \/
