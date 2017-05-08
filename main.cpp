@@ -406,8 +406,8 @@ void drawTemple() {
     
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
-    glTranslatef(-3.5f, 3.25f, -31.75f);
-    glScalef(8.0, 0.5, 0.5);
+    glTranslatef(-3.25f, 3.25f, -31.75f);
+    glScalef(7.5, 0.5, 0.5);
     glutSolidCube(1.0);
     glPopMatrix();
     
