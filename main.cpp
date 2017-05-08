@@ -308,14 +308,14 @@ void drawEntrance() {
 //teta entrada
   glPushMatrix();
   glColor3f(1.0f, 1.0f, 1.0f);
-  glTranslatef(0.0f, 2.25f, -5.0f);
+  glTranslatef(0.0f, 2.25f, -5.5f);
   glScalef(15.0, 0.5, 1.0);
   drawCube(1.0f, fachada_letras_texture);
   glPopMatrix();
   
   glPushMatrix();
   glColor3f(1.0f, 1.0f, 1.0f);
-  glTranslatef(0.0f, 2.25f, -7.0f);
+  glTranslatef(0.0f, 2.25f, -7.5f);
   glScalef(15.0, 0.5, 3.0);
   glutSolidCube(1.0f);
   glPopMatrix();
