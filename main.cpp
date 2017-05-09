@@ -6,7 +6,7 @@
 // actual vector representing the camera's direction
 float lx=0.0f,lz=-1.0f;
 // XZ position of the camera
-float x=-5.0f,z=6.0f;
+float x=-5.0f,z=6.0f, y=1.0f;
 
 float right_door_pivot[] = {-2.55f, 1.25f, -12.10f};
 float left_door_pivot[] = {-4.0f, 1.25f, -13.55f};
@@ -509,6 +509,13 @@ void drawTemple() {
     drawCube(1.0, pulpito_texture);
     glPopMatrix();
     
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(4.75f, 0.75f, -29.25f);
+    glScalef(4.5, 1.5, 4.5);
+    drawCube(1.0, pulpito_texture); 
+    glPopMatrix();
+    
 //escadas frontais
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
@@ -676,8 +683,8 @@ void display()
   // Reset transformations
   glLoadIdentity();
   // Set the camera
-  gluLookAt(  x, 1.0f, z,
-  x+lx, 1.0f, z+lz,
+  gluLookAt(  x, y, z,
+  x+lx, y, z+lz,
   0.0f, 1.0f, 0.0f);
 
   //~ glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -741,6 +748,7 @@ void processSpecialKeys(int key, int xx, int yy)
 {
 
 float fraction = 0.5f;
+float fraction_2 = 0.1f;
 
   switch (key)
   {
@@ -761,6 +769,12 @@ float fraction = 0.5f;
     case GLUT_KEY_DOWN :
     x -= lx * fraction;
     z -= lz * fraction;
+    break;
+    case GLUT_KEY_PAGE_UP:
+    y += y * fraction_2;
+    break;
+    case GLUT_KEY_PAGE_DOWN:
+    y -= y * fraction_2;
     break;
   }
 }
