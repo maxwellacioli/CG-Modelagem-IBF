@@ -132,14 +132,14 @@ void drawProjector() {
 	glColor3f(1.0f, 1.0f, 1.0f);
 	//suporte projetor
     glPushMatrix();
-    glTranslatef(2.0f, 5.375f, -29.0);
+    glTranslatef(3.0f, 5.375f, -29.0);
     glScalef(0.05, 0.5, 0.05);
     glutSolidCube(1.0f);
     glPopMatrix();
     
 	//projetor
     glPushMatrix();
-    glTranslatef(2.0f, 5.0625f, -29.0f);
+    glTranslatef(3.0f, 5.0625f, -29.0f);
     glScalef(0.5, 0.125, 0.5);
     drawCube(1.0f, projector_texture);
     glPopMatrix();
@@ -389,21 +389,86 @@ void drawTemple() {
     glPopMatrix();
 
 //parede lateral direita do templo
+int parede_lateral_relevo[] = {14, -1, -1, -1, -1, -1};
+	
+	glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(7.25f, 2.75f, -17.75f);
+    glScalef(0.5, 5.5, 16.5);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+    
+    //####
+	
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
-    glTranslatef(7.25f, 2.75f, -20.5f);
-    glScalef(0.5, 5.5, 22.0);
-    glutSolidCube(1.0);
+    glTranslatef(7.25f, 2.75f, -28.25f);
+    glScalef(0.5, 5.5, 1.5);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(7.25f, 2.75f, -31.75f);
+    glScalef(0.5, 5.5, 0.5);
+    glutSolidCube(1.0f);
     glPopMatrix();
 
-//parede do fundo do templo
+	glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(7.25f, 2.75f, -31.0f);
+    glScalef(0.5, 5.5, 1.0);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
-    glTranslatef(4.0f, 2.75f, -31.75f);
-    glScalef(7.0, 5.5, 0.5);
+    glTranslatef(7.25f, 2.75f, -29.75f);
+    glScalef(0.5, 5.5, 1.5);
+    drawCube(1.0f, parede_lateral_relevo);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(7.25f, 2.75f, -26.75f);
+    glScalef(0.5, 5.5, 1.5);
+    drawCube(1.0f, parede_lateral_relevo);
+    glPopMatrix();
+
+//parede do fundo do templo 
+//com textura
+
+	int parede_fundo_relevo[] = {-1, -1, -1, -1, 13, -1};
+
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(1.5f, 2.75f, -31.75f);
+    glScalef(2.0, 5.5, 0.5); //
     glutSolidCube(1.0);
     glPopMatrix();
     
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(4.75f, 2.75f, -31.75f);
+    glScalef(1.5, 5.5, 0.5); //
+    glutSolidCube(1.0);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(3.25f, 2.75f, -31.75f);
+    glScalef(1.5, 5.5, 0.5);
+    drawCube(1.0f, parede_fundo_relevo);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(6.25f, 2.75f, -31.75f);
+    glScalef(1.5, 5.5, 0.5);
+    drawCube(1.0f, parede_fundo_relevo);
+    glPopMatrix();
+    
+//parede com vidros 
     glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
     glTranslatef(-3.25f, 3.25f, -31.75f);
@@ -816,6 +881,8 @@ void initTextures(){
 	loadTextureFromFile("texture/fachada-teto.png", 10);
 	loadTextureFromFile("texture/inferior-cruz.png", 11);
 	loadTextureFromFile("texture/superior-cruz.png", 12);
+	loadTextureFromFile("texture/parede-pulpito.jpg", 13);
+	loadTextureFromFile("texture/parede-lateral.jpg", 14);
 	
 }
 	
