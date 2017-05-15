@@ -391,13 +391,65 @@ void drawTemple() {
 //parede lateral direita do templo
 int parede_lateral_relevo[] = {14, -1, -1, -1, -1, -1};
 	
+	//FIXME
 	glPushMatrix();
     glColor3f(0.66f,0.66f,0.66f);
-    glTranslatef(7.25f, 2.75f, -17.75f);
-    glScalef(0.5, 5.5, 16.5);
+    glTranslatef(7.25f, 2.75f, -13.0f);
+    glScalef(0.5, 5.5, 7.0);
     glutSolidCube(1.0f);
     glPopMatrix();
     
+    glPushMatrix();
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(7.25f, 2.75f, -25.0f);
+    glScalef(0.5, 5.5, 2.0);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+    
+    //parte de vidro
+        
+    glPushMatrix(); //4
+	glColor4f(0.5f,0.5f,0.5f, glass_alpha);
+	glTranslatef(7.25f, 1.5f, -18.5f);
+    glScalef(0.5, 3.0, 4.0);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+    
+    glPushMatrix(); //3
+	glColor4f(0.5f,0.5f,0.5f, glass_alpha);
+	glTranslatef(7.25f, 4.5f, -18.5f);
+    glScalef(0.5, 2.0, 4.0);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+    
+    
+    glPushMatrix(); //2
+	glColor4f(0.5f,0.5f,0.5f, glass_alpha);
+	glTranslatef(7.25f, 1.5f, -22.5f);
+    glScalef(0.5, 3.0, 3.0);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+    
+    glPushMatrix(); //1
+	glColor4f(0.5f,0.5f,0.5f, glass_alpha);
+	glTranslatef(7.25f, 4.5f, -22.5f);
+    glScalef(0.5, 2.0, 3.0);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+    
+    glPushMatrix(); //hori
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(7.25f, 3.25f, -20.25f);
+    glScalef(0.5, 0.5, 7.5);
+    glutSolidCube(1.0f);
+    glPopMatrix();
+    
+    glPushMatrix();//verti
+    glColor3f(0.66f,0.66f,0.66f);
+    glTranslatef(7.25f, 2.75f, -20.75f);
+    glScalef(0.5, 5.5, 0.5);
+    glutSolidCube(1.0f);
+    glPopMatrix();
     //####
 	
     glPushMatrix();
@@ -498,6 +550,13 @@ int parede_lateral_relevo[] = {14, -1, -1, -1, -1, -1};
     glPopMatrix();
     
     glPushMatrix();
+	glColor3f(0.66f,0.66f,0.66);
+	glTranslatef(-7.25f, 2.75f, -31.75f);
+    glScalef(0.5, 5.5, 0.5);
+    glutSolidCube(1.0);
+    glPopMatrix();
+    
+    glPushMatrix();
 	glColor4f(0.5f,0.5f,0.5f, glass_alpha);
 	glTranslatef(-5.5f, 1.5f, -31.75f);
     glScalef(3.0, 3.0, 0.5);
@@ -508,13 +567,6 @@ int parede_lateral_relevo[] = {14, -1, -1, -1, -1, -1};
 	glColor4f(0.5f,0.5f,0.5f, glass_alpha);
 	glTranslatef(-5.5f, 4.5f, -31.75f);
     glScalef(3.0, 2.0, 0.5);
-    glutSolidCube(1.0);
-    glPopMatrix();
-    
-    glPushMatrix();
-	glColor3f(0.66f,0.66f,0.66);
-	glTranslatef(-7.25f, 2.75f, -31.75f);
-    glScalef(0.5, 5.5, 0.5);
     glutSolidCube(1.0);
     glPopMatrix();
 
